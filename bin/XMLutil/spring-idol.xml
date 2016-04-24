@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+	   "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	   <!-- beans declarations go here -->
+	   
+	   <!-- 简单的构造器注入 -->
+	   <bean id="duke" class="com.zys.chapter2.Juggler">
+	   		<constructor-arg value="15"/>
+	   </bean>
+	   
+	   <!-- 构造器注入，引用类型reference -->
+	   <bean id="chinesepoem" class="com.zys.chapter2.ChinesePoem"/>
+	   <bean id="poticDuke" class="com.zys.chapter2.PoeticJuggler">
+	   		<constructor-arg value="15"/>
+	   		<constructor-arg ref="chinesepoem"/>
+	   </bean>
+	   
+	   <!-- 工厂方式创建bean -->
+	   <bean id="stage" 
+	   		class="com.zys.chapter2.Stage"
+	   		factory-method="getInstance"/>	   
+	   
+	   <!-- 初始化和销毁bean -->
+	   <bean id="auditorium"
+	   		class="com.zys.chapter2.Auditorium"
+	   		init-method="turnOnLight"
+	   		destroy-method="turnOffLight"/>
+	   	
+	   	<!-- 注入bean属性,setter方式注入 -->
+	   	<bean id="saxophone" 
+	   		class="com.zys.chapter2.Saxophone" 
+	   		autowire-candidate="false"/>
+	   	<bean id="kenny"
+	   		class="com.zys.chapter2.Instrumentalist">
+	   		<property name="song" value="Take me to your heart"/>
+	   		<property name="instrument" ref="saxophone"/>
+	   	</bean>
+	   	
+	   	<!-- 内部bean的演示，内部bean只能被当前bean使用,仅适用于一次注入，不能被其他外部bean使用 -->
+	   	<bean id="kenny2" 
+	   		class="com.zys.chapter2.Instrumentalist">
+	   		<property name="song" value="Let me fly higher"/>
+	   		<property name="instrument">
+	   			<bean class="com.zys.chapter2.Saxophone"/>
+	   		</property>
+	   	</bean>
+	   	
+	   	<!-- 使用命名空间p装配属性 -->
+		<bean id="kenny3"
+			class="com.zys.chapter2.Instrumentalist"
+			p:song = "move faster"
+			p:instrument-ref = "saxophone"/>
+			
+		<!-- 装配集合 -->
+		<bean id="hank" 
+			class="com.zys.chapter2.OneManBand">
+			<property name="instruments">
+				<list>
+				<bean class="com.zys.chapter2.Pinao"/>
+				<bean class="com.zys.chapter2.Saxophone"/>
+				</list>
+			</property>
+		</bean>
+		
+		<!-- byName自动装配 -->
+		<bean id="instrument" class="com.zys.chapter2.Saxophone"/>
+		<bean id="kenny4"
+			class="com.zys.chapter2.Instrumentalist"
+			autowire="byName">
+			<property name="song" value="in the spring"/>
+		</bean>
+		
+		<!-- byType自动装配(instrument装配的id为instrument的类实例) -->
+		<bean id="kenny5"
+			class="com.zys.chapter2.Instrumentalist"
+			autowire="byType">
+			<property name="song" value="hold hands"/>
+		</bean>
+		
+		<!-- Constructor自动装配 -->
+		<bean id="duke2"
+			class="com.zys.chapter2.PoeticJuggler"
+			autowire="constructor">
+			<constructor-arg value="15"/>
+		</bean>
+		
+		<!-- autodetect自动装配(经证实，并没有autodetect这个装配方式) -->
+		<!-- <bean id="duke3"
+			class="com.zys.chapter2..PoeticJuggler"
+			autowire="autodetect"/>
+		 -->
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<context:annotation-config />
+	
+	<!-- 使用注解Autowired注入 -->
+	<bean id="chinese"
+		class="com.zys.chapter3.People">
+		<constructor-arg value="yello"/>
+	</bean>
+	<bean id="english"
+		class="com.zys.chapter3.People">
+		<constructor-arg value="white"/>
+	</bean>
+	<bean id="china"
+		class="com.zys.chapter3.ChineseSay"/>
+	<bean id="england"
+		class="com.zys.chapter3.EnglishSay"/>
+	
+	<!-- 使用注解Resource注入 -->
+	<bean id="american"
+		class="com.zys.chapter3.People">
+		<constructor-arg value="black"/>	
+	</bean>
+	<bean id="americ"
+		class="com.zys.chapter3.AmericanSay"/>
+	
+</beans>
